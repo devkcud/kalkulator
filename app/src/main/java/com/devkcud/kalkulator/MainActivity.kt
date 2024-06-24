@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.util.Stack
+import kotlin.math.exp
 
 class MainActivity : AppCompatActivity() {
     private lateinit var display: TextView
@@ -122,8 +123,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun evaluate(expression: String): String {
+        var ee = expression
+
+        if (currentDisplay.isEmpty()) {
+            ee = "0"
+        }
+
         return try {
-            val e = ExpressionBuilder(expression).build()
+            val e = ExpressionBuilder(ee).build()
             e.evaluate().toString()
         } catch (e: Exception) {
             return "Invalid expression"
