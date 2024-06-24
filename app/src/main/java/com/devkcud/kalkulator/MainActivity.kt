@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             R.id.val_8, R.id.val_9, R.id.val_00, R.id.comma,
             R.id.op_add, R.id.op_subtract, R.id.op_multiply,
             R.id.op_divide, R.id.clear, R.id.del,
-            R.id.parenthesis, R.id.op_result
+            R.id.ac, R.id.op_result
         )
 
         for (id in buttons) {
@@ -64,9 +64,16 @@ class MainActivity : AppCompatActivity() {
             "C" -> clearDisplay()
             "DEL" -> deleteLastCharacter()
             "=" -> calculateResult()
-            "()" -> null
+            "AC" -> removeAll()
             else -> appendToDisplay(buttonText)
         }
+    }
+
+    private fun removeAll() {
+        clearDisplay()
+        onTypeBlank = true
+        undoStack.clear()
+        redoStack.clear()
     }
 
     private fun clearDisplay() {
@@ -121,7 +128,9 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         redoStack.push(currentDisplay)
         currentDisplay = undoStack.pop()
+        if (currentDisplay == "") currentDisplay = "0"
         display.text = currentDisplay
+        if (currentDisplay == "0") currentDisplay = ""
     }
 
     private fun redo() {
@@ -132,6 +141,8 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         undoStack.push(currentDisplay)
         currentDisplay = redoStack.pop()
+        if (currentDisplay == "") currentDisplay = "0"
         display.text = currentDisplay
+        if (currentDisplay == "0") currentDisplay = ""
     }
 }
