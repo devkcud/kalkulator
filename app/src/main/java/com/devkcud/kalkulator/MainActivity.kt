@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import net.objecthunter.exp4j.ExpressionBuilder
+import java.util.Stack
 
 class MainActivity : AppCompatActivity() {
     private lateinit var display: TextView
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var undo: View
     private lateinit var redo: View
+
+    private val undoStack = Stack<String>()
+    private val redoStack = Stack<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         display = findViewById(R.id.display)
         undo = findViewById(R.id.undo)
         redo = findViewById(R.id.redo)
+
+        undo.setOnClickListener { undo() }
+        redo.setOnClickListener { redo() }
 
         initializeButtons()
     }
@@ -51,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onButtonClick(view: View) {
+        saveToUndoStack()
+
         when (val buttonText = (view as Button).text.toString()) {
             "C" -> clearDisplay()
             "DEL" -> deleteLastCharacter()
@@ -97,5 +106,32 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             return "Invalid expression"
         }
+    }
+
+    private fun saveToUndoStack() {
+        undoStack.push(currentDisplay)
+        redoStack.clear()
+    }
+
+    private fun undo() {
+        if (undoStack.isEmpty()) {
+            return
+        }
+
+        onTypeBlank = false
+        redoStack.push(currentDisplay)
+        currentDisplay = undoStack.pop()
+        display.text = currentDisplay
+    }
+
+    private fun redo() {
+        if (redoStack.isEmpty()) {
+            return
+        }
+
+        onTypeBlank = false
+        undoStack.push(currentDisplay)
+        currentDisplay = redoStack.pop()
+        display.text = currentDisplay
     }
 }
