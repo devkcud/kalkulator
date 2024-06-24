@@ -6,19 +6,31 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var display: TextView;
+    private lateinit var display: TextView
     private var currentDisplay = ""
-    private var onTypeBlank = true;
+    private var onTypeBlank = true
+
+    private lateinit var undo: View
+    private lateinit var redo: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        display = findViewById(R.id.display);
+        display = findViewById(R.id.display)
+        undo = findViewById(R.id.undo)
+        redo = findViewById(R.id.redo)
 
         initializeButtons()
     }
@@ -78,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         display.text = currentDisplay
     }
 
-    fun evaluate(expression: String): String {
+    private fun evaluate(expression: String): String {
         return try {
             val e = ExpressionBuilder(expression).build()
             e.evaluate().toString()

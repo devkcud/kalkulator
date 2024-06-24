@@ -36,40 +36,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/history"
+                android:textColor="@color/white"
                 android:layout_margin="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="History"/>
             <Button
+                android:id="@+id/undo"
+                android:textColor="@color/white"
                 android:layout_margin="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"/>
+                android:text="Undo"/>
             <Button
+                android:id="@+id/redo"
+                android:textColor="@color/white"
                 android:layout_margin="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"/>
-            <Button
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"/>
-            <Button
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"/>
-            <Button
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"/>
-            <Button
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"/>
+                android:text="Redo"/>
         </LinearLayout>
     </HorizontalScrollView>
 
