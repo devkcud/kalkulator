@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         redoStack.push(currentDisplay)
         currentDisplay = undoStack.pop()
-        if (currentDisplay == "") currentDisplay = "0"
+        if (currentDisplay.isEmpty()) currentDisplay = "0"
         display.text = currentDisplay
         if (currentDisplay == "0") currentDisplay = ""
     }
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         undoStack.push(currentDisplay)
         currentDisplay = redoStack.pop()
-        if (currentDisplay == "") currentDisplay = "0"
+        if (currentDisplay.isEmpty()) currentDisplay = "0"
         display.text = currentDisplay
         if (currentDisplay == "0") currentDisplay = ""
     }
