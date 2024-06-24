@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
         saveToUndoStack()
 
         when (val buttonText = (view as Button).text.toString()) {
+            "AC" -> removeAll()
             "C" -> clearDisplay()
             "DEL" -> deleteLastCharacter()
             "=" -> calculateResult()
-            "AC" -> removeAll()
             else -> appendToDisplay(buttonText)
         }
     }
@@ -89,6 +89,10 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         currentDisplay = currentDisplay.substring(0, currentDisplay.length - 1)
         display.text = currentDisplay
+
+        if (display.text.isEmpty()) {
+            display.text = "0"
+        }
     }
 
     private fun calculateResult() {
@@ -102,6 +106,17 @@ class MainActivity : AppCompatActivity() {
             clearDisplay()
             onTypeBlank = false
         }
+
+        if (currentDisplay.isEmpty() && text == "0") {
+            return
+        }
+
+        if (currentDisplay.isEmpty() && text == ".") {
+            currentDisplay = "0."
+            display.text = currentDisplay
+            return
+        }
+
         currentDisplay += text
         display.text = currentDisplay
     }
@@ -128,9 +143,11 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         redoStack.push(currentDisplay)
         currentDisplay = undoStack.pop()
-        if (currentDisplay.isEmpty()) currentDisplay = "0"
         display.text = currentDisplay
-        if (currentDisplay == "0") currentDisplay = ""
+
+        if (display.text.isEmpty()) {
+            display.text = "0"
+        }
     }
 
     private fun redo() {
@@ -141,8 +158,10 @@ class MainActivity : AppCompatActivity() {
         onTypeBlank = false
         undoStack.push(currentDisplay)
         currentDisplay = redoStack.pop()
-        if (currentDisplay.isEmpty()) currentDisplay = "0"
         display.text = currentDisplay
-        if (currentDisplay == "0") currentDisplay = ""
+
+        if (display.text.isEmpty()) {
+            display.text = "0"
+        }
     }
 }
