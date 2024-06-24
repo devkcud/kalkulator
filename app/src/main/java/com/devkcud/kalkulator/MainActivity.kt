@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onButtonClick(view: View) {
-        val button = view as Button
-        when (val buttonText = button.text.toString()) {
+        when (val buttonText = (view as Button).text.toString()) {
             "C" -> clearDisplay()
             "DEL" -> deleteLastCharacter()
             "=" -> calculateResult()
